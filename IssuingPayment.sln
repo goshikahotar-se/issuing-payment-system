@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuingPayment.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuingPayment.Infrastructure", "IssuingPayment.Infrastructure\IssuingPayment.Infrastructure.csproj", "{C620E514-1F44-4110-B445-3C63BA6D583F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuingPayment.Tests", "IssuingPayment.Tests\IssuingPayment.Tests.csproj", "{76BA3DFC-7A49-4064-9FA8-43C0E3B4DA12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssuingPayment.Tests", "IssuingPayment.Tests\IssuingPayment.Tests.csproj", "{050DC4FA-A6EA-42A3-9C78-49CD2034029E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +32,9 @@ Global
 		{C620E514-1F44-4110-B445-3C63BA6D583F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C620E514-1F44-4110-B445-3C63BA6D583F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C620E514-1F44-4110-B445-3C63BA6D583F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76BA3DFC-7A49-4064-9FA8-43C0E3B4DA12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76BA3DFC-7A49-4064-9FA8-43C0E3B4DA12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76BA3DFC-7A49-4064-9FA8-43C0E3B4DA12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76BA3DFC-7A49-4064-9FA8-43C0E3B4DA12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050DC4FA-A6EA-42A3-9C78-49CD2034029E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050DC4FA-A6EA-42A3-9C78-49CD2034029E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050DC4FA-A6EA-42A3-9C78-49CD2034029E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050DC4FA-A6EA-42A3-9C78-49CD2034029E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
