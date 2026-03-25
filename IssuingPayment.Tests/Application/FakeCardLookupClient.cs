@@ -14,7 +14,17 @@ public class FakeCardLookupClient : ICardLookupClient
             Cvc = "112",
             ExpiryMonth = 11,
             ExpiryYear = 2027,
-            Status =  "Active"
+            Status =  0
+        },
+        new CardSummary()
+        {
+            CardId = "crd_w3zmaz3q1az5oyq7",
+            AvailableLimit = 10L,
+            Currency = "GBP",
+            Cvc = "571",
+            ExpiryMonth = 11,
+            ExpiryYear = 2027,
+            Status = 1
         }
     };
     
