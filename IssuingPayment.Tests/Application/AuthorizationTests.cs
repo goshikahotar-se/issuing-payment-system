@@ -27,7 +27,8 @@ public class AuthorizationTests
     {
         //Arrange
         var cardLookupClient = new FakeCardLookupClient();
-        var service = new AuthorizePaymentService(cardLookupClient);
+        var authorizationEventPublisher = new FakeAuthorizationEventPublisher();
+        var service = new AuthorizePaymentService(cardLookupClient, authorizationEventPublisher);
         var command = new AuthorizePaymentCommand
         {
             CardId = cardId,
