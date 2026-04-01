@@ -1,4 +1,6 @@
 ﻿using IssuingPayment.Application.Authorizations;
+using IssuingPayment.Application.Authorizations.Events;
+using IssuingPayment.Application.Helper;
 using Xunit;
 using Assert = Xunit.Assert;
 
@@ -48,5 +50,59 @@ public class AuthorizationTests
         
         var hasAuthCode = !string.IsNullOrWhiteSpace(result.AuthorizationCode);
         Assert.Equal(approved, hasAuthCode);
+    }
+
+    [Fact]
+    public async Task Approved_Transaction_Publishes_Exactly_1_AuthorizationApprovedEvent()
+    {
+        // Arrange
+        var command = new AuthorizePaymentCommand
+        {
+            CardId = "crd_dwsxaz3q1az54cil",
+            Amount = 10L,
+            Currency = "EUR",
+            Cvc = "112",
+            ExpiryMonth = 11,
+            ExpiryYear = 2027
+        };
+        
+        var cardLookupClient  = new FakeCardLookupClient();
+        var publisher  = new FakeAuthorizationEventPublisher();
+        var service = new AuthorizePaymentService(cardLookupClient , publisher);
+        
+        // Act
+        await service.Handle(command, CancellationToken.None);
+        
+        // Assert
+        var publishedEvent = Assert.Single(publisher.authorizationEvents);
+        Assert.IsType<AuthorizationApprovedEvent>(publishedEvent);
+    }
+    
+    [Fact]
+    public async Task Declined_Transaction_Publishes_Exactly_1_AuthorizationDeclinedEvent()
+    {
+        // Arrange
+        var command = new AuthorizePaymentCommand
+        {
+            CardId = "crd_dwsxaz3q1az54cil",
+            Amount = 10L,
+            Currency = "EUR",
+            Cvc = "999",
+            ExpiryMonth = 11,
+            ExpiryYear = 2027
+        };
+        
+        var cardLookupClient  = new FakeCardLookupClient();
+        var publisher  = new FakeAuthorizationEventPublisher();
+        var service = new AuthorizePaymentService(cardLookupClient , publisher);
+        
+        // Act
+        await service.Handle(command, CancellationToken.None);
+        
+        // Assert
+        var publishedEvent = Assert.Single(publisher.authorizationEvents);
+        var result = Assert.IsType<AuthorizationDeclinedEvent>(publishedEvent);
+        
+        Assert.Equal("InvalidCvc", result.ReasonCode);
     }
 }

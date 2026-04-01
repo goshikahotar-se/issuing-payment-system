@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\IssuingPayment.Application\IssuingPayment.Application.csproj" />
+      <ProjectReference Include="..\IssuingPayment.Infrastructure\IssuingPayment.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

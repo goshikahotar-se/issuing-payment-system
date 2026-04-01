@@ -1,4 +1,6 @@
 using IssuingPayment.Application.Authorizations;
+using IssuingPayment.Application.Authorizations.Events;
+using IssuingPayment.Infrastructure;
 using IssuingPayment.Infrastructure.Services;
 using Serilog;
 
@@ -16,6 +18,7 @@ builder.Services.AddHttpClient<ICardLookupClient, HttpCardLookupClient>(client =
     if (!string.IsNullOrWhiteSpace(issuingCardBaseUrl)) client.BaseAddress = new Uri(issuingCardBaseUrl);
     else throw new InvalidOperationException("IssuingCard:BaseUrl is not set");
 });
+builder.Services.AddSingleton<IAuthorizationEventPublisher, LoggingAuthorizationEventPublisher>();
 
 //Configure Serilog
 Log.Logger = new LoggerConfiguration()

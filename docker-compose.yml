@@ -1,0 +1,12 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sns,sqs
+      - LOCALSTACK_ACKNOWLEDGE_ACCOUNT_REQUIREMENT=1
+      - DEFAULT_REGION=eu-west-1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./docker/localstack/init:/etc/localstack/init"

@@ -4,7 +4,7 @@ namespace IssuingPayment.Tests.Application;
 
 public class FakeAuthorizationEventPublisher : IAuthorizationEventPublisher
 {
-    public List<IAuthorizationEvent> authorizationEvents = new List<IAuthorizationEvent>();
+    public List<IAuthorizationEvent> authorizationEvents = new();
     
 
     public Task PublishAsync(IAuthorizationEvent authorizationEvent, CancellationToken cancellationToken)
