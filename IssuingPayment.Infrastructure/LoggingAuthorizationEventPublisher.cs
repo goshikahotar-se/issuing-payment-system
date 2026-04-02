@@ -5,7 +5,7 @@ namespace IssuingPayment.Infrastructure;
 
 public class LoggingAuthorizationEventPublisher : IAuthorizationEventPublisher
 {
-    public Task PublishAsync(IAuthorizationEvent authorizationEvent, CancellationToken cancellationToken)
+    public async Task PublishAsync(IAuthorizationEvent authorizationEvent, CancellationToken cancellationToken)
     {
         switch (authorizationEvent)
         {
@@ -23,7 +23,5 @@ public class LoggingAuthorizationEventPublisher : IAuthorizationEventPublisher
                 Log.Warning("Unknown authorization event {Event}", authorizationEvent.GetType().Name);
                 break;
         }
-        
-        return Task.CompletedTask;
     }
 }

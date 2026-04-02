@@ -1,8 +1,10 @@
+using Amazon.SimpleNotificationService;
 using IssuingPayment.Application.Authorizations;
 using IssuingPayment.Application.Authorizations.Events;
 using IssuingPayment.Infrastructure;
 using IssuingPayment.Infrastructure.Services;
 using Serilog;
+using Amazon.Runtime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,32 @@ builder.Services.AddHttpClient<ICardLookupClient, HttpCardLookupClient>(client =
     if (!string.IsNullOrWhiteSpace(issuingCardBaseUrl)) client.BaseAddress = new Uri(issuingCardBaseUrl);
     else throw new InvalidOperationException("IssuingCard:BaseUrl is not set");
 });
-builder.Services.AddSingleton<IAuthorizationEventPublisher, LoggingAuthorizationEventPublisher>();
+
+builder.Services.AddSingleton<IAmazonSimpleNotificationService>(sp =>
+{
+    var serverUrl = builder.Configuration["LocalStack:ServerUrl"];
+    var region = builder.Configuration["LocalStack:Region"] ?? "eu-west-1";
+
+    var snsConfig = new AmazonSimpleNotificationServiceConfig
+    {
+        ServiceURL = serverUrl,
+        AuthenticationRegion = region
+    };
+
+    var credentials = new BasicAWSCredentials("test", "test");
+    
+    return new AmazonSimpleNotificationServiceClient(credentials, snsConfig);
+});
+
+builder.Services.AddSingleton<IAuthorizationEventPublisher, SnsAuthorizationEventPublisher>(sp =>
+{
+    var snsClient = sp.GetRequiredService<IAmazonSimpleNotificationService>();
+    
+    var arn = builder.Configuration["LocalStack:TopicArn"]
+        ?? throw new InvalidOperationException("LocalStack:TopicArn is not set");
+    
+    return new SnsAuthorizationEventPublisher(snsClient, arn);
+});
 
 //Configure Serilog
 Log.Logger = new LoggerConfiguration()
